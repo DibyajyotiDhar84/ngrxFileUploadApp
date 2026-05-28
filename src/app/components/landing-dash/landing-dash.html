@@ -1,0 +1,19 @@
+<div>
+  <form [formGroup]="fileForm" (Submit)="submit()">
+    <div>
+      <input type="text" formControlName="name" placeholder="name" />
+    </div>
+    <div>
+      <input type="email" formControlName="email" placeholder="email" />
+    </div>
+    <div formArrayName="files">
+      <div *ngFor="let file of files.controls; let i = index" [formGroupName]="i">
+        <input type="file" (change)="onFileChange($event, i)" />
+        <input type="text" formControlName="fileName" placeholder="file name" readonly />
+        <button type="button" (click)="removeFile(i)">Remove</button>
+      </div>
+    </div>
+    <button type="button" (click)="addFiles()">AddFile</button>
+    <button type="submit">Submit</button>
+  </form>
+</div>
