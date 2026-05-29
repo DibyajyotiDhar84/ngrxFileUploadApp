@@ -1,7 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CommonModule } from '../../../../node_modules/@angular/common/types/_common_module-chunk';
+import { uploadFile } from '../../File-State/file-action';
 
 @Component({
   selector: 'app-landing-dash',
@@ -50,13 +51,20 @@ export class LandingDash {
   }
 
   submit() {
-    const formData = new FormData();
-    formData.append('name', this.fileForm.value.name);
-    formData.append('email', this.fileForm.value.email);
+    debugger;
+    const formdata = new FormData();
+    formdata.append('name', this.fileForm.value.name);
+    formdata.append('email', this.fileForm.value.email);
     this.files.value.forEach((item: any) => {
-      formData.append('file', item.file);
+      formdata.append('files', item.file);
     });
+    formdata.forEach((value, key) => {
+    console.log(`${key}:`, value);
+  });
 
     //store action dispatch--->>
+    this.store.dispatch(uploadFile({formdata}));
+
+    
   }
 }
